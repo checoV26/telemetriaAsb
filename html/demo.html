@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo</title>
+    <link rel="icon" href="../assets/images/logoA.png" type="image/x-icon" />
+    <link rel="stylesheet" href="../assets/styles/menu.css" />
+    <link rel="stylesheet" href="../assets/styles/bootstrap.min.css" />
+    <link rel="stylesheet" href="../assets/styles/sweetalert2.min.css" />
+    <link rel="stylesheet" href="../assets/styles/spinner.css" />
+    <script src="../libs/jquery-3.6.3.min.js"></script>
+    <script src="../libs/popper.min.js.js"></script>
+    <script src="../libs/bootstrap.bundle.min.js"></script>
+    <script src="../libs/all.min.js"></script>
+    <script src="../libs/sweetalert2.all.min.js"></script>
+    <script src="../libs/jquery.blockUI.min.js"></script>
+    <script src="../libs/globalFunctions.js"></script>
+    <script src="../libs/mqtt.min.js"></script>
+    <script src="../libs/raphael-2.1.4.min.js"></script>
+    <script src="../libs/justgage.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg mb-4" id="main_navbar">
+        <picture><img src="../assets/images/logo.avif" width="70" height="70"
+                class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
+                alt="asBombeo" /></picture>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-water text-light"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto" id="ulMenu">
+                <li class="nav-item dropdown"></li>
+                <li class="nav-item dropdown"></li>
+                <li class="nav-item dropdown"></li>
+                <li class="nav-item dropdown"></li>
+                <li class="nav-item dropdown"></li>
+                <li class="nav-item dropdown"></li>
+                <li class="nav-item dropdown"></li>
+                <li class="nav-item dropdown"> <a href="../index.html" rel="noopener noreferrer">Regresar</a></li>
+            </ul>
+        </div>
+    </nav>
+    <form action="" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 justify-content-center d-flex row mt-4">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div id="statusConnected"><i class="fa-solid fa-circle text-danger"></i> Desconectado...</div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div id="gauge"></div>
+        </div>
+        <div id="mensajesRecibidos"></div>
+    </form>
+    <script src="../js/demo.js"></script>
+</body>
+
+</html>
