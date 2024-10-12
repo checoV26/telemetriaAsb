@@ -14,6 +14,8 @@ const createWindows = () => {
   win.maximize();
 
   win.loadFile("index.html");
+  // Abre las herramientas de desarrollador
+  win.webContents.openDevTools();
 };
 
 app.whenReady().then(() => {

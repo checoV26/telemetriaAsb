@@ -1,26 +1,209 @@
-const clientId = `brokerAsb:${Math.floor(Math.random() * (10000 - 1 + 1) + 1)}`;
-const mqttUrl = `ws://asbombeo.ddns.net:8083/mqtt`;
+/*const clientId = `brokerAsb:${Math.floor(Math.random() * (10000 - 1 + 1) + 1)}`;
+const mqttUrl = `ws://broker.hivemq.com:8000/mqtt`;
 const opcionesMqtt = {
   clientId: clientId,
   clean: true,
-};
-
+};*/
 $(document).ready(() => {
-  conecctedMqtt();
-  var g = new JustGage({
-    id: "gauge",
-    value: 67,
-    min: 0,
-    max: 100,
-    title: "ejemplo 1",
-  });
-  setInterval(function () {
-    g.refresh(getRandomInt(35, 98));
-  }, 1000);
+  var datasStrig = {
+    device: [
+      {
+        ID: "1",
+        NAME: "BOMBA 1",
+        ESTADO: "1",
+        VOLTAJE: "75.28",
+        CORRIENTE: "116.00",
+        FRECUENCIA: "182.40",
+        DIGESTORES: [
+          {
+            id: "1",
+            data: [
+              {
+                name: "TEMPERATURA",
+                value: "101.70",
+              },
+              {
+                name: "OXIGENO",
+                value: "172.68",
+              },
+              {
+                name: "APERTURA",
+                value: "166.98",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        ID: "2",
+        NAME: "BOMBA 2",
+        ESTADO: "1",
+        VOLTAJE: "75.28",
+        CORRIENTE: "116.00",
+        FRECUENCIA: "182.40",
+        DIGESTORES: [
+          {
+            id: "2",
+            data: [
+              {
+                name: "TEMPERATURA",
+                value: "101.70",
+              },
+              {
+                name: "OXIGENO",
+                value: "172.68",
+              },
+              {
+                name: "APERTURA",
+                value: "166.98",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        ID: "3",
+        NAME: "BOMBA 3",
+        ESTADO: "1",
+        VOLTAJE: "75.28",
+        CORRIENTE: "116.00",
+        FRECUENCIA: "182.40",
+        DIGESTORES: [
+          {
+            id: "3",
+            data: [
+              {
+                name: "TEMPERATURA",
+                value: "101.70",
+              },
+              {
+                name: "OXIGENO",
+                value: "172.68",
+              },
+              {
+                name: "APERTURA",
+                value: "166.98",
+              },
+            ],
+          },
+          {
+            id: "3",
+            data: [
+              {
+                name: "TEMPERATURA",
+                value: "101.70",
+              },
+              {
+                name: "OXIGENO",
+                value: "172.68",
+              },
+              {
+                name: "APERTURA",
+                value: "166.98",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        ID: "3",
+        NAME: "BOMBA 3",
+        ESTADO: "1",
+        VOLTAJE: "75.28",
+        CORRIENTE: "116.00",
+        FRECUENCIA: "182.40",
+        DIGESTORES: [
+          {
+            id: "3",
+            data: [
+              {
+                name: "TEMPERATURA",
+                value: "101.70",
+              },
+              {
+                name: "OXIGENO",
+                value: "172.68",
+              },
+              {
+                name: "APERTURA",
+                value: "166.98",
+              },
+            ],
+          },
+          {
+            id: "3",
+            data: [
+              {
+                name: "TEMPERATURA",
+                value: "101.70",
+              },
+              {
+                name: "OXIGENO",
+                value: "172.68",
+              },
+              {
+                name: "APERTURA",
+                value: "166.98",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        ID: "3",
+        NAME: "BOMBA 3",
+        ESTADO: "1",
+        VOLTAJE: "75.28",
+        CORRIENTE: "116.00",
+        FRECUENCIA: "182.40",
+        DIGESTORES: [
+          {
+            id: "3",
+            data: [
+              {
+                name: "TEMPERATURA",
+                value: "101.70",
+              },
+              {
+                name: "OXIGENO",
+                value: "172.68",
+              },
+              {
+                name: "APERTURA",
+                value: "166.98",
+              },
+            ],
+          },
+          {
+            id: "3",
+            data: [
+              {
+                name: "TEMPERATURA",
+                value: "101.70",
+              },
+              {
+                name: "OXIGENO",
+                value: "172.68",
+              },
+              {
+                name: "APERTURA",
+                value: "166.98",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  };
+  //console.log(JSON.stringify(datasStrig));
 });
 
+$("#idProyect").on("change", function () {
+  // validar el equipamiento del cliente
+  conecctedMqtt();
+});
 let conecctedMqtt = () => {
-  clientMQTT = mqtt.connect(mqttUrl, opcionesMqtt);
+  clientMQTT = mqtt.connect(config.mqttUrl, config.opcionesMqtt);
 
   clientMQTT.on("connect", () => {
     $("#statusConnected").html(
@@ -28,15 +211,10 @@ let conecctedMqtt = () => {
     );
 
     // Suscribirse al tópico
-    clientMQTT.subscribe(`pruebasAsb/#`, (err) => {
+    clientMQTT.subscribe(`ASBOMBEO/DEMO/DATOS/DATAJSON`, (err) => {
       if (!err) {
         // Publicar un mensaje de prueba
-        publicarMensaje(
-          clientMQTT,
-          `pruebasAsb/datas`,
-          JSON.stringify({ msg: "mensaje de prueba app web" }),
-          () => {}
-        );
+        console.log("conectado");
       } else {
         alert("Error al suscribirse al tópico");
       }
@@ -47,10 +225,40 @@ let conecctedMqtt = () => {
   clientMQTT.on("message", (topic, message) => {
     // Aquí puedes procesar el mensaje recibido
     const mensajeRecibido = message.toString();
-    // Por ejemplo, puedes mostrarlo en la página
-    $("#mensajesRecibidos").append(
-      `<p><strong>${topic}</strong>: ${mensajeRecibido}</p>`
-    );
+    console.log(top);
+    console.log(mensajeRecibido);
+    let datos = JSON.parse(mensajeRecibido);
+    let arrayData = datos.device;
+    var newCard = "";
+
+    arrayData.forEach((item) => {
+      // 8
+      // Recorrer el array de DIGESTORES
+      var newDigestor =
+        '<div class="col-md-6 row justify-content-start d-flex">';
+      // el valor es un objero
+      if (typeof item == Object) {
+
+      }
+      
+      item.DIGESTORES.forEach((digestor) => {
+        newDigestor += newDigestores(digestor.id);
+        digestor.data.forEach((dataItem) => {
+          newDigestor += newDigestoresComplement(dataItem.name, dataItem.value);
+        });
+      });
+      newDigestor += "</div>";
+
+      newCard += newCardHtml(
+        item.NAME,
+        item.FRECUENCIA,
+        item.VOLTAJE,
+        item.CORRIENTE,
+        0.0,
+        newDigestor
+      );
+    });
+    $("#viewCard").html(newCard);
   });
 
   // Manejo de desconexión
