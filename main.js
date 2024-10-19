@@ -1,6 +1,9 @@
 const { app, BrowserWindow } = require("electron");
 const { autoUpdater } = require("electron-updater");
 
+// Agregar electron-reload
+require('electron-reload')(__dirname);
+
 const createWindows = () => {
   const win = new BrowserWindow({
     fullscreenable: false, // No permite pantalla completa
@@ -15,7 +18,7 @@ const createWindows = () => {
 
   win.loadFile("index.html");
   // Abre las herramientas de desarrollador
-  win.webContents.openDevTools();
+   win.webContents.openDevTools();
 };
 
 app.whenReady().then(() => {

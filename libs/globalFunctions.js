@@ -21,27 +21,20 @@ let spinner = () => {
   });
 };
 
-let newCardHtml = (
-  name,
-  frecuencia,
-  voltaje,
-  corriente,
-  frecuencia2,
-  newDigestor
-) => {
+let newCardHtml = (contentCard, dataC) => {
   const card = `
-  <div class="col-12 col-sm-6 col-md-6 mb-3">
+<div class="col-12 col-sm-6 col-md-6 mb-3">
                 <div class="card ">
                     <div class="card-body">
-                        <h5 class="card-title"><i class="fa-solid fa-circle text-success"></i> ${name}</h5>
+                        <h5 class="card-title"><i class="fa-solid fa-circle text-success"></i> </h5>
                         <div class="row justify-content-start">
 
-                            <div class="col-12 col-md-6">
+                            <div class="col-12 col-md-12">
                                 <div class="col-md-12">
                                     <img src="../assets/images/soplador.JPG" class="custom-img soplador-img"
                                         alt="soplador">
                                 </div>
-                                <div class="col-md-12  row justify-content-start d-flex mt-3">
+                                <div class="col-md-6  row justify-content-start d-flex mt-3">
                                     <div class="col-md-4">
                                         <button type="button" class="btn btn-secondary btn-sm">Auto</button>
                                     </div>
@@ -53,79 +46,79 @@ let newCardHtml = (
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="col-12 col-md-6 row justify-content-start d-flex">
-                                <div class="col-md-7">
-                                    <label>Frecuencia (Hz)</label>
+                            <div class="col-12 col-md-12 mt-3">
+                                <div class="col-12 col-md-12 row justify-content-center d-flex">
+                                    ${contentCard}
                                 </div>
-                                <div class="col-md-3">
-                                    <label class="digital-font font-size-25">${frecuencia}</label>
-                                </div>
-                                <div class="col-md-7">
-                                    <label>Voltaje (V)</label>
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="digital-font font-size-25">${voltaje}</label>
-                                </div>
-                                <div class="col-md-7">
-                                    <label>Corriente(A)</label>
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="digital-font font-size-25">${corriente}</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-12 row justify-content-start d-flex mt-3">
-                                <div class="col-md-6">
-                                    <label for="">Ajuste frecuencia del soplador 1</label>
-                                    <input type="range" class="form-control-range" id="">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="" class="d-block">Fecuencia de referencia (Hz)</label>
-                                    <label class="digital-font font-size-25 d-block">${frecuencia2}</label>
-                                </div>
-
-                            </div>
-                            <div class="col-12 col-md-12 row justify-content-start d-flex mt-3">
-                                ${newDigestor}
+                                 <div class="col-12 col-md-12 row justify-content-center d-flex">
+                                    ${dataC}
+                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-  
   `;
 
   return card;
 };
 
-let newDigestores = (name) => {
-  const dig = `
-                <div class="col-md-12">
-                    <label for="">${name}</label>
-                    <input type="range" class="form-control-range" id="">
-                </div>
+let contentCard = (name, value) => {
+  return `
+        <div class="col-md-6">
+            <p class=" h5">${name}</p>
+        </div>
+        <div class="col-md-6">
+            <p class="digital-font h5">${value}</p>
+        </div>
   `;
-  return dig;
 };
 
-let newDigestoresComplement = (name, value) => {
-  const dig = `
-                  <div class="col-md-6">
-                      <label class="font-size-12">${name}</label>
-                  </div>
-                  <div class="col-md-6">
-                      <label class="digital-font font-size-25">${value}</label>
-                  </div>
-    `;
-  return dig;
+let titleD = (title) => {
+  return `
+        <div class="col-md-12">
+            <p class=" h5"><b>${title}</b></p>
+        </div>
+  `;
+};
+let obtenerValores = (data) => {
+  var newCard = "";
+  var dataC = "";
+  console.log(data);
+  data.forEach((bomba, index) => {
+    var contentC = "";
+    Object.entries(bomba).forEach(([key, value]) => {
+      // Verificar si el valor es un array
+      if (Array.isArray(value)) {
+        // Recorrer el array interno
+        value.forEach((item, i) => {
+          var titulo = `${key} ${item.id}`;
+          dataC += titleD(titulo);
+          item.data.forEach((b, v) => {
+            dataC += contentCard(b.name, b.value);
+          });
+        });
+      } else {
+        contentC += contentCard(key, value);
+      }
+    });
+    newCard += newCardHtml(contentC, dataC);
+  });
+  return newCard;
 };
 
-let recorrerArray=()=>{
-    
-}
+let tableA = (data) => {
+  var filas = "";
+  data.forEach((item) => {
+    filas += `<tr>`;
+    filas += `<td>${item.id}</td>`;
+    filas += `<td>${item.menssge}</td>`;
+    filas += `<td>${item.date}</td>`;
+    filas += `</tr>`;
+  });
+  return filas;
+};
 function generarNumeroRandom(min, max) {
   const numeroAleatorio = Math.random() * (max - min) + min;
   return parseFloat(numeroAleatorio.toFixed(2)); // Aplicamos toFixed al número generado
 }
-
-
