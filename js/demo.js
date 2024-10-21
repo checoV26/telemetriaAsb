@@ -2,9 +2,11 @@ $(document).ready(() => {});
 
 $("#idProyect").on("change", function () {
   // validar el equipamiento del cliente
-  conecctedMqtt();
+  var topic = $(this).val();
+  topic != "" ? conecctedMqtt(topic) : console.log("no hay topico");
 });
-let conecctedMqtt = () => {
+let conecctedMqtt = (topico) => {
+  console.log(topico);
   try {
     // Conexión al servidor MQTT
     connectToMQTT(config.mqttUrl, config.opcionesMqtt)
@@ -13,18 +15,17 @@ let conecctedMqtt = () => {
           '<i class="fa-solid fa-circle text-success"></i> Conectado...'
         );
         // Después de la conexión, suscríbete a un tópico
-        return subscribeToTopic("ASBOMBEO/DEMO/DATOS/DATAJSON");
+        return subscribeToTopic(topico);
       })
       .then(() => {
         // Escucha los mensajes del tópico
         listenToMessages((topic, message) => {
           var mensajeJon = JSON.parse(message);
-          var arrayData = mensajeJon.device;
-          console.log(mensajeJon);
+          var arrayData = mensajeJon.data;
           if (Array.isArray(arrayData)) {
             $("#viewCard").html(obtenerValores(arrayData));
           } else {
-            console.log("Datos incorrectos");
+            console.error("Datos incorrectos");
           }
         });
       })

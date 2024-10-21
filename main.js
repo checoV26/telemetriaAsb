@@ -1,8 +1,17 @@
 const { app, BrowserWindow } = require("electron");
 const { autoUpdater } = require("electron-updater");
+const path = require("path");
 
-// Agregar electron-reload
-require('electron-reload')(__dirname);
+// Solo carga electron-reload en modo desarrollo
+if (process.env.NODE_ENV !== "production") {
+  try {
+    require("electron-reload")(__dirname, {
+      electron: path.join(__dirname, "node_modules", ".bin", "electron"),
+    });
+  } catch (err) {
+    console.error("Error loading electron-reload:", err);
+  }
+}
 
 const createWindows = () => {
   const win = new BrowserWindow({
@@ -17,8 +26,11 @@ const createWindows = () => {
   win.maximize();
 
   win.loadFile("index.html");
-  // Abre las herramientas de desarrollador
-   win.webContents.openDevTools();
+
+  // Abre las herramientas de desarrollador solo en modo desarrollo
+  if (process.env.NODE_ENV !== "production") {
+    win.webContents.openDevTools();
+  }
 };
 
 app.whenReady().then(() => {

@@ -63,13 +63,13 @@ let newCardHtml = (contentCard, dataC) => {
   return card;
 };
 
-let contentCard = (name, value) => {
+let contentCard = (name, value, simbolo) => {
   return `
         <div class="col-md-6">
-            <p class=" h5">${name}</p>
+            <p class="h5 font-weight-bold">${name}</p>
         </div>
         <div class="col-md-6">
-            <p class="digital-font h5">${value}</p>
+            <p class="digital-font h5">${value} ${simbolo}</p>
         </div>
   `;
 };
@@ -84,26 +84,30 @@ let titleD = (title) => {
 let obtenerValores = (data) => {
   var newCard = "";
   var dataC = "";
-  console.log(data);
-  data.forEach((bomba, index) => {
-    var contentC = "";
-    Object.entries(bomba).forEach(([key, value]) => {
-      // Verificar si el valor es un array
-      if (Array.isArray(value)) {
-        // Recorrer el array interno
-        value.forEach((item, i) => {
-          var titulo = `${key} ${item.id}`;
-          dataC += titleD(titulo);
-          item.data.forEach((b, v) => {
-            dataC += contentCard(b.name, b.value);
-          });
+  try {
+    data.forEach((bomba, index) => {
+      var contentC = "";
+      try {
+        Object.entries(bomba).forEach(([key, value]) => {
+          if (Array.isArray(value)) {
+            value.forEach((element) => {
+              dataC += contentCard(
+                element.name,
+                element.value,
+                element.simbolo
+              );
+            });
+          }
         });
-      } else {
-        contentC += contentCard(key, value);
+      } catch (error) {
+        dataC += contentCard("", "", "");
       }
+      newCard += newCardHtml(contentC, dataC);
+      dataC = "";
     });
-    newCard += newCardHtml(contentC, dataC);
-  });
+  } catch (error) {
+    newCard = "";
+  }
   return newCard;
 };
 
