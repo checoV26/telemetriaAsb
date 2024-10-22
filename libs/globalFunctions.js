@@ -111,13 +111,23 @@ let obtenerValores = (data) => {
   return newCard;
 };
 
+let mostrarColunas=(data)=>{
+  var columnas="";
+    data.forEach(element => {
+      columnas +=`<th class="text-center">${element}</th>`;// 9
+    });
+    return `<tr class="text-center">${columnas}</tr>`;
+}
+
+
+
 let tableA = (data) => {
   var filas = "";
   data.forEach((item) => {
     filas += `<tr>`;
-    filas += `<td>${item.id}</td>`;
-    filas += `<td>${item.menssge}</td>`;
-    filas += `<td>${item.date}</td>`;
+    filas += `<td>${item.name}</td>`;
+    filas += `<td>${item.value}</td>`;
+    filas += `<td>${item.simbolo}</td>`;
     filas += `</tr>`;
   });
   return filas;

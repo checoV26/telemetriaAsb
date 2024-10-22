@@ -3,7 +3,7 @@ $(document).ready(() => {});
 $("#idProyect").on("change", function () {
   // validar el equipamiento del cliente
   var topic = $(this).val();
-  topic != "" ? conecctedMqtt(topic) : console.log("no hay topico");
+  topic != "" ? conecctedMqtt(topic) : alert("No se encontraron datos que mostrar.");
 });
 let conecctedMqtt = (topico) => {
   console.log(topico);

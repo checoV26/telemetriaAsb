@@ -14,8 +14,7 @@ let obtenerA = () => {
         // Escucha los mensajes del tópico
         listenToMessages((topic, message) => {
           var mensajeJon = JSON.parse(message);
-          console.log(mensajeJon);
-          var arrayData = mensajeJon.table;
+          var arrayData = mensajeJon.data.generalData;
           if (Array.isArray(arrayData)) {
             $("#tblAlarmas tbody").html(tableA(arrayData));
           }
