@@ -28,9 +28,9 @@ const createWindows = () => {
   win.loadFile("index.html");
 
   // Abre las herramientas de desarrollador solo en modo desarrollo
-  if (process.env.NODE_ENV !== "production") {
+  /*if (process.env.NODE_ENV !== "production") {
     win.webContents.openDevTools();
-  }
+  }*/
 };
 
 app.whenReady().then(() => {

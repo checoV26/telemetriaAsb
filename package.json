@@ -5,8 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-    "pack:linux": "electron-packager . appAsb --platform=linux --arch=x64 --icon=assets/images/logoA.png --out=release/",
-    "pack:win64": "electron-packager . appAsb --platform=win32 --arch=x64 --icon=assets/images/logoA.png --out=release/"
+    "pack:linux": "electron-packager . telemetriaAb --platform=linux --arch=x64 --icon=assets/images/logoFondo.png --out=release/",
+    "pack:win64": "electron-packager . telemetriaAb --platform=win32 --arch=x64 --icon=assets/images/logoFondo.png --out=release/"
   },
   "keywords": [],
   "author": "Sergio Marcos Rodriguez",
