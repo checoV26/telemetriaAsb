@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Demo</title>
+    <title>Control sopladores y valvulas</title>
     <link rel="icon" href="../assets/images/logoA.png" type="image/x-icon" />
     <link rel="stylesheet" href="../assets/styles/menu.css" />
     <link rel="stylesheet" href="../assets/styles/bootstrap.min.css" />
@@ -17,13 +17,14 @@
     <script src="../libs/all.min.js"></script>
     <script src="../libs/sweetalert2.all.min.js"></script>
     <script src="../libs/jquery.blockUI.min.js"></script>
-    <script src="../libs/globalFunctions.js"></script>
     <script src="../libs/mqtt.min.js"></script>
     <script src="../libs/raphael-2.1.4.min.js"></script>
     <script src="../libs/justgage.js"></script>
     <script src="../libs/bootstrap-select.min.js"></script>
+    <script src="../libs/globalFunctions.js"></script>
     <script src="../config/config.js"></script>
     <script src="../config/mqtt-client.js"></script>
+
 </head>
 
 <body>
@@ -42,10 +43,9 @@
                 <li class="nav-item dropdown"></li>
                 <li class="nav-item dropdown"></li>
                 <li class="nav-item dropdown"></li>
-                <li class="nav-item dropdown"></li>
-                <li class="nav-item dropdown"><a href="../html/bitacora.html" rel="noopener noreferrer">Bitacora de
-                        evento</a></li>
-                <li class="nav-item dropdown"> <a href="../index.html" rel="noopener noreferrer">Regresar</a></li>
+                <li class="nav-item dropdown"><a href="../html/automaticControl.html">Control Automatico</a></li>
+                <li class="nav-item dropdown"><a href="../html/bitacora.html" rel="noopener noreferrer">Bitacora de evento</a></li>
+                <li class="nav-item dropdown"> <a href="#" onclick="deleteData()" rel="noopener noreferrer">Regresar</a></li>
             </ul>
         </div>
     </nav>
@@ -57,9 +57,9 @@
             <label for="idProyect">Proyectos <span class="text-danger">*</span></label>
             <select name="idProyect" id="idProyect" class="form-control form-control-sm selectpicker"
                 data-live-search="true" title="---------------------------" data-size="10">
-                <option class="text-dark" value="ASBOMBEO/DEMO/DATOS/DATAJSON">Proyect 1</option>
-                <option class="text-dark" value="ASBOMBEO/DEMO/DATOS/DATAJSON/B2">Proyect 2</option>
-                <option class="text-dark" value="ASBOMBEO/DEMO/DATOS/DATAJSON/B3">Proyect 3</option>
+                <option class="text-dark" value="DATAJSON/B1">Proyect 1</option>
+                <option class="text-dark" value="DATAJSON/B2">Proyect 2</option>
+                <option class="text-dark" value="DATAJSON/B3">Proyect 3</option>
             </select>
         </div>
     </form>

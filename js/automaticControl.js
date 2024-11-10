@@ -1,30 +1,13 @@
 $(document).ready(() => {
   // guardar topico base
-  queryData();
+  automaticConnection();
 });
 
-let queryData = () => {
-  // Validamos si ya existe en cache el campo
-  var selectOpcionHome = localStorage.getItem("selectOpcionHome");
-  var baseTopic = localStorage.getItem("baseTopic");
-  if (selectOpcionHome != "" && selectOpcionHome != null) {
-    $("#idProyect").val(selectOpcionHome);
-    var topic = `${baseTopic}/CONTROLSV`;
-    conecctedMqtt(topic);
-  }
-
-  /*if (baseTopic == "" || baseTopic == null) {
-    localStorage.setItem("baseTopic", "ASBOMBEO/DEMO/DATOS/");
-  }*/
-};
-
-$("#idProyect").on("change", function () {
-  // validar el equipamiento del cliente
-  localStorage.setItem("selectOpcionHome", $(this).val());
-  localStorage.setItem("baseTopic", "ASBOMBEO/DEMO/DATOS/" + $(this).val());
-  var topic = `${localStorage.getItem("baseTopic")}/CONTROLSV`;
-  if (topic != "" && topic != null) {
-    conecctedMqtt(topic);
+let automaticConnection = () => {
+  var baseTopic = `${localStorage.getItem("baseTopic")}/AUTOMATICCONTROL`;
+  console.log(baseTopic)
+  if (baseTopic != "") {
+    conecctedMqtt(baseTopic);
   } else {
     Swal.fire({
       position: "center",
@@ -34,7 +17,7 @@ $("#idProyect").on("change", function () {
       timer: 1500,
     });
   }
-});
+};
 
 let conecctedMqtt = (topico) => {
   try {
@@ -48,17 +31,17 @@ let conecctedMqtt = (topico) => {
         return subscribeToTopic(topico);
       })
       .then(() => {
-        // Escucha los mensajes del tópico
         listenToMessages((topic, message) => {
           var mensajeJon = JSON.parse(message);
           var arrayData = mensajeJon.data;
           if (Array.isArray(arrayData)) {
-            $("#viewCard").html(obtenerValores(arrayData, listImages.contolV));
+            $("#viewCard").html(
+              controlData(arrayData, listImages.automaticControl)
+            );
           }
         });
       })
       .catch((err) => {
-        $("#viewCard").html("")
         $("#statusConnected").html(
           '<i class="fa-solid fa-circle text-danger"></i>Desconectado.....'
         );

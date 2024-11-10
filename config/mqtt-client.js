@@ -22,11 +22,16 @@ function connectToMQTT(brokerUrl, options = {}) {
     // Manejando el evento de desconexión
     mqttClient.on("offline", () => {
       console.warn("El cliente MQTT está desconectado.");
+      $("#statusConnected").html(
+        '<i class="fa-solid fa-circle text-danger"></i> Desconectado...'
+      );
     });
 
     // Manejando el evento de reconexión
     mqttClient.on("reconnect", () => {
-      console.log("Intentando reconectar al servidor MQTT...");
+      $("#statusConnected").html(
+        '<i class="fa-solid fa-circle text-warning"></i> Reconcectando...'
+      );
     });
 
     // Manejando el evento de cierre

@@ -1,4 +1,5 @@
 $(document).ready(() => {
+  localStorage.clear();
   $("#formLogin").on("submit", function (e) {
     login(e);
   });
@@ -6,5 +7,5 @@ $(document).ready(() => {
 
 let login = (e) => {
   e.preventDefault();
-  spinner()
+  spinner();
 };
